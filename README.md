@@ -1,62 +1,67 @@
-# Панель сервера для телевизора
+# Living Room Server Dashboard
 
-[![Tests](https://github.com/ginginohf/living-room-server-dashboard/actions/workflows/tests.yml/badge.svg)](https://github.com/ginginohf/living-room-server-dashboard/actions/workflows/tests.yml) · [MIT](LICENSE)
+**English** | [Русский](README.ru.md)
 
-Read-only сборщик Linux-метрик и крупная браузерная панель. Токен вводится в браузере и хранится только в памяти вкладки.
+[![Tests](https://github.com/ginginohf/living-room-server-dashboard/actions/workflows/tests.yml/badge.svg)](https://github.com/ginginohf/living-room-server-dashboard/actions/workflows/tests.yml) [MIT](LICENSE)
 
-Редакция 0.1.0 под лицензией MIT. Не содержит настроек конкретного сервера и пользовательских данных. Это самостоятельная адаптация, а не побитная копия рабочего развёртывания.
+Keep an eye on a home server from a television: a native Android TV screensaver, a manual preview activity and a small browser dashboard backed by a read-only metrics collector.
 
-## Требования
+## What it does
 
-Linux, Python 3.11+, браузер; дополнительных библиотек нет.
+- The Linux collector samples CPU, RAM, uptime, temperature, network throughput and configured disks every five seconds.
+- Disk cards include capacity/free space and I/O activity; recent CPU/network history is available to clients.
+- The Android TV screen displays clocks, charts and server metrics; enter the metrics URL and token after installation.
+- A browser page offers compact cards for a quick check without installing the Android app.
+- Optional currency-rate retrieval is disabled by default and can be enabled separately.
+- `/metrics` requires a Bearer token. The collector has no server-control endpoint.
 
-## Развёртывание
+## Examples and screenshots
 
-Скачайте проект:
+See [worked examples](docs/EXAMPLES.md) for reproducible demonstrations and output. Examples use synthetic data; no private server configuration is included.
+
+![Application preview — synthetic demo data](docs/images/overview.png)
+
+## Requirements
+
+Linux/Python 3.11+ for the collector; JDK 17 and Android SDK 34 to build the TV app.
+
+## Quick start
 
 ```sh
 git clone https://github.com/ginginohf/living-room-server-dashboard.git
 cd living-room-server-dashboard
-```
-
-Следующие команды выполняются из корня репозитория. Не используйте production-данные для первого запуска.
-
-```sh
 export DASHBOARD_TOKEN="$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')"
+# Loopback is the default; choose a LAN bind address only for trusted clients.
+export DASHBOARD_HOST=127.0.0.1
 python3 monitor.py
-# Откройте http://127.0.0.1:18737 и введите свой токен.
+# Open http://127.0.0.1:18737 and enter your token.
+# In a separate terminal, to build the TV app:
+cd android
+./gradlew --no-daemon assembleDebug lintDebug
 ```
 
-## Настройки и ограничения
+## Configuration and limits
 
-/metrics требует Bearer-токен; HTML оболочка доступна без метрик. DASHBOARD_MOUNTS — JSON массива пар путь/название; по умолчанию только /. Для ТВ задайте LAN-адрес в DASHBOARD_HOST и ограничьте доступ доверенной сетью; HTTP не защищает токен от перехвата, для недоверенной сети нужен HTTPS-прокси. ENABLE_RATES=1 отдельно включает запрос курсов ЦБ; по умолчанию внешних запросов нет. Метрики появляются через5секунд. Не предусмотрено управление сервером.
+CPU temperature detection targets coretemp; unsupported sensors may show no value. Browser and Android layouts differ. HTTP is for a trusted LAN; use HTTPS when the token needs transport protection. Native client settings are stored in private app preferences, not embedded into the APK. The release APK needs your own signing configuration. The screenshots below show the browser client, not an Android emulator.
 
-## Проверки
+See the [Android TV build and installation guide](android/README.md). Set `DASHBOARD_MOUNTS` to a JSON list of `[path, label]` pairs; the default is the system filesystem. `ENABLE_RATES=1` enables external rate retrieval.
+
+## Tests
 
 ```sh
 python3 -m unittest discover -s tests -v
 ```
 
-Для проектов с requirements.txt сначала установите зависимости в виртуальное окружение. Результаты локальных проверок и ограничения — в TESTING.md. CI предназначен для Linux; аппаратные счётчики и реальные диски в CI не эмулируются.
+Install dependencies first when `requirements.txt` is present. See [TESTING.md](TESTING.md) for scope and limitations.
 
-## Обновление и откат
+## Documentation
 
-Сохраните конфигурацию и данные отдельно от кода. Остановите только этот экземпляр, замените код, выполните тесты, запустите снова. Не переносите тестовые базы поверх рабочих. Подробности — RESTORE.md.
+- [Examples](docs/EXAMPLES.md)
+- [Recovery and upgrades](RESTORE.md)
+- [Security](SECURITY.md)
+- [Contributing](CONTRIBUTING.md)
+- [Third-party components](THIRD_PARTY.md)
 
-## Приватность и публикация
+## License
 
-.env/config.json, базы, журналы, state и зависимости исключены из Git. Игнорирование не очищает уже закоммиченные данные: перед push повторите аудит. README-примеры не содержат действующих учётных данных. См. SECURITY.md, CONTRIBUTING.md, THIRD_PARTY.md. Собственный код распространяется по [MIT](LICENSE). Сторонние компоненты сохраняют свои условия.
-
-## Готовая заставка Android TV
-
-В `android/` включён исходный экран ожидания с графиками и часами, адаптированный для настройки адреса/токена после установки. Инструкции сборки, установки и выбора заставки — [android/README.md](android/README.md). Браузерная страница остаётся дополнительным способом просмотра.
-
-## Документация и обратная связь
-
-- [Проверки и их ограничения](TESTING.md)
-- [Обновление и восстановление](RESTORE.md)
-- [Безопасность и секреты](SECURITY.md)
-- [Как предложить изменение](CONTRIBUTING.md)
-- [Сторонние компоненты](THIRD_PARTY.md)
-
-Сообщая об ошибке через Issues, укажите версию ОС, команду запуска и ожидаемый результат. Удалите из журналов токены, пароли и личные данные.
+Original project code is available under the [MIT License](LICENSE). Third-party components retain their own licenses.

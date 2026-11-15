@@ -1,5 +1,5 @@
-# Provenance and dependencies
+# Third-party components
 
-Original server-specific code was extracted into a new repository without deployment history or production data. This is not a claim that all algorithms are novel. External runtimes and dependencies are installed separately and retain their own licenses. Original project code is licensed under MIT; dependencies retain their respective licenses.
+Original project code is MIT licensed. The Gradle wrapper retains its original notices; its license is preserved in android/GRADLE_LICENSE.txt. Android SDK and build dependencies are installed separately and retain their own licenses. No private credentials or original deployment screenshots are bundled.
 
-`android/gradlew` и `android/gradle/wrapper/gradle-wrapper.jar` — Gradle Wrapper, сторонний компонент Gradle (Apache-2.0). Дистрибутив8.9 загружается по URL из wrapper properties и проверяется по distributionSha256Sum. Личные Secrets.java, APK и ключи подписи не перенесены.
+[Русский](THIRD_PARTY.ru.md)
