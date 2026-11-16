@@ -6,6 +6,16 @@
 
 Keep an eye on a home server from a television: a native Android TV screensaver, a manual preview activity and a small browser dashboard backed by a read-only metrics collector.
 
+## Ready-to-install Android TV APK
+
+[Download signed APK 1.0.0](https://github.com/ginginohf/living-room-server-dashboard/releases/download/v1.0.0/living-room-server-dashboard-1.0.0.apk) · [Release and SHA-256](https://github.com/ginginohf/living-room-server-dashboard/releases/tag/v1.0.0)
+
+Requires Android TV 8.0+ (API 26). Install the APK, open the app, enter your collector URL ending in `/metrics` and its token, then choose the app as your TV screensaver. See the [Android TV guide](android/README.md). No private endpoint or token is embedded.
+
+![Native Android TV screensaver](docs/images/android-tv-dashboard.png)
+
+Actual signed release APK running on Android TV 12 at 1920×1080. Metrics and exchange rates are synthetic demonstration data.
+
 ## What it does
 
 - The Linux collector samples CPU, RAM, uptime, temperature, network throughput and configured disks every five seconds.
@@ -42,7 +52,7 @@ cd android
 
 ## Configuration and limits
 
-CPU temperature detection targets coretemp; unsupported sensors may show no value. Browser and Android layouts differ. HTTP is for a trusted LAN; use HTTPS when the token needs transport protection. Native client settings are stored in private app preferences, not embedded into the APK. The release APK needs your own signing configuration. The screenshots below show the browser client, not an Android emulator.
+CPU temperature detection targets coretemp; unsupported sensors may show no value. Browser and Android layouts differ. HTTP is for a trusted LAN; use HTTPS when the token needs transport protection. Native client settings are stored in private app preferences, not embedded into the APK. The release APK needs your own signing configuration. The main release screenshot shows the native Android TV app; browser screenshots are labeled separately.
 
 See the [Android TV build and installation guide](android/README.md). Set `DASHBOARD_MOUNTS` to a JSON list of `[path, label]` pairs; the default is the system filesystem. `ENABLE_RATES=1` enables external rate retrieval.
 

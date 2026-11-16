@@ -19,3 +19,9 @@ python3 examples/capture_ui.py
 ```
 
 Images are written to `docs/images/`. Alternatively set `DEMO_CHROME` to an existing Chrome executable. Interface labels currently remain Russian; documentation language does not change application localization.
+
+## Native Android TV screensaver
+
+![Android TV release](images/android-tv-dashboard.png)
+
+The signed release APK was installed on Android TV 12 ARM64. This is an adb screencap of the running DreamService with synthetic values, not private server telemetry.

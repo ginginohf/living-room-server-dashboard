@@ -19,3 +19,9 @@ python3 examples/capture_ui.py
 ```
 
 Файлы сохраняются в `docs/images/`. Для установленного Chrome можно задать `DEMO_CHROME` вместо скачивания Chromium. Подписи интерфейса сейчас русские; язык документации не меняет язык приложения.
+
+## Нативная заставка Android TV
+
+![Android TV release](images/android-tv-dashboard.png)
+
+Релизный APK установлен в эмулятор Android TV 12 ARM64. Это снимок DreamService через adb screencap; значения демонстрационные, не показатели домашнего сервера.
